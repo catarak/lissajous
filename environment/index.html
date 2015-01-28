@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="vendor/jcubic/css/jquery.terminal.css" rel="stylesheet"/>
   </head>
   <body>
   <div class="bar"></div>
@@ -14,6 +15,9 @@
 
     <div class="drag-and-drop">
       <div class="drag-and-drop-inner">Drop your .wav files here.</div>
+    </div>
+
+    <div id="terminal">
     </div>
 
     <script src="../src/vendor/bufferLoader.js"></script>
@@ -47,6 +51,38 @@
     <script src="extras.js"></script>
     <script src="drag-and-drop.js"></script>
 
+    <script src="vendor/jcubic/js/jquery-1.7.1.min.js"></script>
+    <script src="vendor/jcubic/js/jquery.mousewheel-min.js"></script>
+    <script src="vendor/jcubic/js/jquery.terminal-min.js"></script>
+
+    <script>
+
+    function runIncomingCommand(command) {
+        try {
+            var result = eval.apply(window,[command]);
+        } catch(e) {
+            $("#terminal").terminal().echo(e.message);
+            return;
+        }
+        $("#terminal").terminal().echo(command);
+    }
+
+    jQuery(document).ready(function($) {
+        $('#terminal').terminal(function(command) {
+            try {
+                var result = eval.apply(window,[command]);
+            } catch (e) {
+                $("#terminal").terminal().set_command(command);
+                return e.message;
+            }
+            return "[[guib;<COLOR>;<BACKGROUND>]" + command + "]";
+        }, {
+            greetings: "",
+            prompt: "> "
+        });
+    });
+
+    </script>
 
   </body>
 </html>
