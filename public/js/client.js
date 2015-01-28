@@ -3,7 +3,7 @@ var serverup = false;
 var mystackindex = -1;
 var colors = palette('rainbow', 10);
 var myColor = 0; // Fill this with whatever User ID
-var sounding = false;
+var sounding = true; //set this to false to disable local computing/sound
 
 function colorify(message, color) {
     var m = "[[;#" + colors[color] + ";#000]" + message + "]";
