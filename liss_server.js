@@ -28,21 +28,21 @@ io.on('connection', function(socket){
 
 	socket.emit('handshake',socket.index);
 	io.sockets.emit('updateusers', usernames);
-  	console.log('a user connected');
+    console.log('a user connected');
 
 	socket.on('disconnect', function(){
-	  	console.log('user disconnected');
+        console.log('user disconnected');
 		delete usernames[socket.username];
 		io.sockets.emit('updateusers', usernames);
 	});
 
 	socket.on('sendLine', function (code) {
-	
+
 		stack.push({
 			"index": stackindex,
 			"text": code,
 			"color": socket.index
-		})
+		});
 
 		stackindex++;
 
