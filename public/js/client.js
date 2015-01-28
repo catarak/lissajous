@@ -1,13 +1,22 @@
 var socket = io();
 var serverup = false;
+var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 
-function runIncomingCommand(command) {
+function colorify(message, color) {
+    return "[[;" + color + ";]" + message + "]";
+}
+
+function runIncomingCommand(command, color) {
 	if(!serverup) return;
-	console.log(command)
+    // Command: string with command to run
+    // Color: string with the user color code
     try {
-		eval.apply(window,[command]);
-		source.value = '';
+        var result = eval.apply(window,[command]);
     } catch(e) {
+        var out = colorify(
+            "Error in incoming command: " + command + "\n" +
+            "    " + e.message,
+        color);
         $("#terminal").terminal().echo(e.message);
         return;
     }
@@ -18,17 +27,17 @@ jQuery(document).ready(function($) {
 	setInterval(serverReady, 1000);
 
     $('#terminal').terminal(function(command) {
-    	if(!serverup) return;
+        if(!serverup) return;
         try {
             var result = eval.apply(window,[command]);
-    		socket.emit('sendLine', command);
-
+            socket.emit('sendLine', command);
         } catch (e) {
             $("#terminal").terminal().set_command(command);
-            return e.message;
+            return colorify(e.message,myColor);
         }
-        return "[[guib;<COLOR>;<BACKGROUND>]" + command + "]";
+        return colorify(command,myColor);
     }, {
+        completion: [],
         greetings: "",
         prompt: "> "
     });
