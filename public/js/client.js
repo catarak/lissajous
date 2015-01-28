@@ -1,11 +1,11 @@
 var socket = io();
 var serverup = false;
-var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 var mystackindex = -1;
 var colors = palette('sequential', 100);
+var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 
 function colorify(message, color) {
-    return "[[;" + color + ";]" + message + "]";
+    return "[[;" + colors[color] + ";]" + message + "]";
 }
 
 function runIncomingCommand(command) {
@@ -52,6 +52,10 @@ jQuery(document).ready(function($) {
         prompt: "> "
     });
 
+    socket.on('handshake', function(color) {
+        console.log('you are player ' + color);
+        myColor = colors[color];
+    });
     socket.on('updateLine', runIncomingCommand);
 });
 
