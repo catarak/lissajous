@@ -53,7 +53,7 @@ jQuery(document).ready(function($) {
         }
         return colorify(command, myColor);
     }, {
-        completion: [],
+        completion: ["add","addsamples","adsr","adsr32","beat","beat32","bounce","bp","chorus","clamp","clshift","delay","destroy","dfb","dlevel","dtime","eval","famt","fenv","ffreq","fres","group","hp","loop","lp","merge","nl","nl32","notch","notes","pan","play","remove","render","render32","reverse","rf","ri","root","sample","saw","select","shift","sine","speed","square","sseq","step","stretch","sync","track","trans","tremolo","tri","type","vol"],
         greetings: "",
         prompt: "> "
     });
