@@ -1,8 +1,8 @@
 var socket = io();
 var serverup = false;
 var mystackindex = -1;
-var colors = palette('sequential', 100);
-var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
+var colors = palette('rainbow', 10);
+var myColor = 0; // Fill this with whatever User ID
 
 function colorify(message, color) {
     var m = "[[;#" + colors[color] + ";#000]" + message + "]";
@@ -12,11 +12,14 @@ function colorify(message, color) {
 
 function runIncomingCommand(command) {
 	if (!serverup) return;
+    console.log(command);
     // Command: string with command to run
     // Color: string with the user color code
     for (var i=0;i<command.length;i++) {
-        if (command[i].index < mystackindex) {
+        if (command[i].index > mystackindex) {
+            if (command[i].color == myColor) continue;
             var com = command[i].text;
+            mystackindex = command[i].index;
             try {
                 eval.apply(window,[com]);
             } catch(e) {
@@ -25,8 +28,6 @@ function runIncomingCommand(command) {
                     "    " + e.message,
                 command[i].color);
                 $("#terminal").terminal().echo(out);
-            } finally {
-                mystackindex = commmand[i].index;
             }
             $("#terminal").terminal().echo(colorify(com, command[i].color));
         }
