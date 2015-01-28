@@ -15,14 +15,17 @@ app.get('/', function(req, res){
 
 var stack = new Array();
 var stackindex = 0;
-
 var usernames = new Array();
+var userindex = 0;
 
 io.on('connection', function(socket){
 
-	var name = "user"+~~(Math.random()*100000);
+	var name = "user"+userindex);
 	socket.username = name;
 	usernames[name] = name;
+	socket.index = userindex;
+	userindex++;
+
 	io.sockets.emit('updateusers', usernames);
   	console.log('a user connected');
 
@@ -33,12 +36,11 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('sendLine', function (code) {
-
-		console.log(code)
 	
 		stack.push({
 			"index": stackindex,
-			"text": code
+			"text": code,
+			"color": socket.index
 		})
 
 		stackindex++;
