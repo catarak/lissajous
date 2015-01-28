@@ -1,9 +1,10 @@
 {
   "name": "lissajous-io",
-  "scripts": {
-    "start": "node liss_server.js"
-  },
+  "main": "liss_server.js",
   "version": "0.0.0-15",
+  "scripts": {
+    "start": "node ."
+  },
   "engines": {
     "node": "0.10.x"
   },
