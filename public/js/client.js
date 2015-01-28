@@ -2,7 +2,7 @@ var socket = io();
 var serverup = false;
 var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 var mystackindex = -1;
-
+var colors = palette('sequential', 100);
 
 function colorify(message, color) {
     return "[[;" + color + ";]" + message + "]";
