@@ -5,7 +5,7 @@ var colors = palette('sequential', 100);
 var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 
 function colorify(message, color) {
-    return "[[;" + colors[color] + ";]" + message + "]";
+    return "[[;<" + colors[color] + ">;]" + message + "]";
 }
 
 function runIncomingCommand(command) {
