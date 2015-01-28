@@ -1,6 +1,8 @@
 var socket = io();
 var serverup = false;
 var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
+var mystackindex = -1;
+
 
 function colorify(message, color) {
     return "[[;" + color + ";]" + message + "]";
@@ -11,7 +13,12 @@ function runIncomingCommand(command, color) {
     // Command: string with command to run
     // Color: string with the user color code
     try {
-        var result = eval.apply(window,[command]);
+        for (var i=0;i<command.length;i++) {
+            if (command[i].index<mystackindex) {
+                var result = eval.apply(window,[command[i].text]);
+                mystackindex = command[i].index;
+            }
+        }
     } catch(e) {
         var out = colorify(
             "Error in incoming command: " + command + "\n" +
