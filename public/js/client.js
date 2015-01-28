@@ -3,6 +3,7 @@ var serverup = false;
 var mystackindex = -1;
 var colors = palette('rainbow', 10);
 var myColor = 0; // Fill this with whatever User ID
+var sounding = false;
 
 function colorify(message, color) {
     var m = "[[;#" + colors[color] + ";#000]" + message + "]";
@@ -21,7 +22,8 @@ function runIncomingCommand(command) {
             var com = command[i].text;
             mystackindex = command[i].index;
             try {
-                eval.apply(window,[com]);
+                if (sounding)
+                    eval.apply(window,[com]);
             } catch(e) {
                 var out = colorify(
                     "Error in incoming command: " + com + "\n" +
@@ -43,7 +45,8 @@ jQuery(document).ready(function($) {
         }
         socket.emit('sendLine', command);
         try {
-            eval.apply(window, [command]);
+            if (sounding)
+                eval.apply(window, [command]);
         } catch (e) {
             $("#terminal").terminal().set_command(command);
             return colorify(e.message, myColor);
