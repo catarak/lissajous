@@ -36,13 +36,13 @@ jQuery(document).ready(function($) {
     $('#terminal').terminal(function(command) {
         if(!serverup) return;
         try {
-            var result = eval.apply(window,[command]);
+            eval.apply(window, [command]);
             socket.emit('sendLine', command);
         } catch (e) {
             $("#terminal").terminal().set_command(command);
-            return colorify(e.message,myColor);
+            return colorify(e.message, myColor);
         }
-        return colorify(command,myColor);
+        return colorify(command, myColor);
     }, {
         completion: [],
         greetings: "",
