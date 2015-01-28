@@ -35,10 +35,12 @@ jQuery(document).ready(function($) {
 	setInterval(serverReady, 1000);
 
     $('#terminal').terminal(function(command) {
-        if(!serverup) return;
+        if(!serverup) {
+            return $("#terminal").terminal().error("Server offline.");
+        }
+        socket.emit('sendLine', command);
         try {
             eval.apply(window, [command]);
-            socket.emit('sendLine', command);
         } catch (e) {
             $("#terminal").terminal().set_command(command);
             return colorify(e.message, myColor);
