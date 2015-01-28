@@ -1,7 +1,7 @@
 {
   "name": "lissajous-io",
   "scripts": {
-    "start": "liss_server.js"
+    "start": "node liss_server.js"
   },
   "version": "0.0.0-15",
   "engines": {
