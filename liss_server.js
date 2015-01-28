@@ -26,6 +26,7 @@ io.on('connection', function(socket){
 	socket.index = userindex;
 	userindex++;
 
+	socket.emit('handshake',socket.index);
 	io.sockets.emit('updateusers', usernames);
   	console.log('a user connected');
 
