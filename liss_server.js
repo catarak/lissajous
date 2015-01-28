@@ -20,7 +20,7 @@ var userindex = 0;
 
 io.on('connection', function(socket){
 
-	var name = "user"+userindex);
+	var name = "user"+userindex;
 	socket.username = name;
 	usernames[name] = name;
 	socket.index = userindex;
