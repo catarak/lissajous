@@ -5,7 +5,9 @@ var colors = palette('sequential', 100);
 var myColor = "0x00ff00"; // Fill this with whatever User ID-generated color
 
 function colorify(message, color) {
-    return "[[;<" + colors[color] + ">;]" + message + "]";
+    var m = "[[;#" + colors[color] + ";#000]" + message + "]";
+    console.log(m);
+    return m;
 }
 
 function runIncomingCommand(command) {
@@ -54,7 +56,7 @@ jQuery(document).ready(function($) {
 
     socket.on('handshake', function(color) {
         console.log('you are player ' + color);
-        myColor = colors[color];
+        myColor = color;
     });
     socket.on('updateLine', runIncomingCommand);
 });
