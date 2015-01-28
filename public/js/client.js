@@ -8,26 +8,27 @@ function colorify(message, color) {
     return "[[;" + color + ";]" + message + "]";
 }
 
-function runIncomingCommand(command, color) {
-	if(!serverup) return;
+function runIncomingCommand(command) {
+	if (!serverup) return;
     // Command: string with command to run
     // Color: string with the user color code
-    try {
-        for (var i=0;i<command.length;i++) {
-            if (command[i].index<mystackindex) {
-                var result = eval.apply(window,[command[i].text]);
-                mystackindex = command[i].index;
+    for (var i=0;i<command.length;i++) {
+        if (command[i].index < mystackindex) {
+            var com = command[i].text;
+            try {
+                eval.apply(window,[com]);
+            } catch(e) {
+                var out = colorify(
+                    "Error in incoming command: " + com + "\n" +
+                    "    " + e.message,
+                command[i].color);
+                $("#terminal").terminal().echo(out);
+            } finally {
+                mystackindex = commmand[i].index;
             }
+            $("#terminal").terminal().echo(colorify(com, command[i].color));
         }
-    } catch(e) {
-        var out = colorify(
-            "Error in incoming command: " + command + "\n" +
-            "    " + e.message,
-        color);
-        $("#terminal").terminal().echo(e.message);
-        return;
     }
-    $("#terminal").terminal().echo(command);
 }
 
 jQuery(document).ready(function($) {
