@@ -21,10 +21,9 @@ var userindex = 0;
 io.on('connection', function(socket){
 
 	if (Object.keys(usernames).length==0) {
-		console.log("bla")
 		userindex = 0;
 		stackindex = 0;
-		stack = new Array();
+		stack = [];
 	}
 
 	console.log(Object.keys(usernames).length)
@@ -38,10 +37,10 @@ io.on('connection', function(socket){
 
 	socket.emit('handshake',socket.index);
 	io.sockets.emit('updateusers', usernames);
-    console.log('a user connected');
+	console.log('a user connected');
 
 	socket.on('disconnect', function(){
-        console.log('user disconnected');
+	console.log('user disconnected');
 		delete usernames[socket.username];
 		io.sockets.emit('updateusers', usernames);
 	});

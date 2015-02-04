@@ -1,6 +1,6 @@
 {
   "name": "lissajous-io",
-  "main": "liss_server.js",
+  "main": "server.js",
   "version": "0.0.0-15",
   "scripts": {
     "start": "node ."
