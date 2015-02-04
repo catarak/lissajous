@@ -1,12 +1,12 @@
 var socket = io();
 var serverup = false;
 var mystackindex = -1;
-var colors = palette('rainbow', 10);
+var colors = palette('tol-rainbow', 10);
 var myColor = 0; // Fill this with whatever User ID
 var sounding = true; //set this to false to disable local computing/sound
 
 function colorify(message, color) {
-    var m = "[[;#" + colors[color] + ";#000]" + message + "]";
+    var m = "[[;#" + colors[color] + ";#ebebe5]" + message + "]";
     console.log(m);
     return m;
 }
@@ -54,8 +54,11 @@ jQuery(document).ready(function($) {
         return colorify(command, myColor);
     }, {
         completion: ["add","addsamples","adsr","adsr32","beat","beat32","bounce","bp","chorus","clamp","clshift","delay","destroy","dfb","dlevel","dtime","eval","famt","fenv","ffreq","fres","group","hp","loop","lp","merge","nl","nl32","notch","notes","pan","play","remove","render","render32","reverse","rf","ri","root","sample","saw","select","shift","sine","speed","square","sseq","step","stretch","sync","track","trans","tremolo","tri","type","vol"],
-        greetings: "",
-        prompt: "> "
+        greetings: "Lissajous has started up\nIf you're new here, try t = new track()",
+        prompt: "> ",
+        keypress: function() {
+         //   socket.emit('typing',$("#terminal .cmd span")[1].innerHTML)
+        }
     });
 
     socket.on('handshake', function(color) {

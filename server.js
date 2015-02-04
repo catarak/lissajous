@@ -15,16 +15,26 @@ app.get('/', function(req, res){
 
 var stack = new Array();
 var stackindex = 0;
-var usernames = new Array();
+var usernames = new Object();
 var userindex = 0;
 
 io.on('connection', function(socket){
+
+	if (Object.keys(usernames).length==0) {
+		console.log("bla")
+		userindex = 0;
+		stackindex = 0;
+		stack = new Array();
+	}
+
+	console.log(Object.keys(usernames).length)
 
 	var name = "user"+userindex;
 	socket.username = name;
 	usernames[name] = name;
 	socket.index = userindex;
 	userindex++;
+
 
 	socket.emit('handshake',socket.index);
 	io.sockets.emit('updateusers', usernames);
@@ -55,8 +65,21 @@ io.on('connection', function(socket){
 
 	});
 
+	socket.on('typing', function (code) {
+
+		var msg = {
+			"index": socket.username,
+			"text": code,
+			"color": socket.index
+		};
+
+		io.sockets.emit('updateTyping', msg);
+
+	});
+
 });
 
-http.listen(process.env.PORT || 8080, function(){
-    console.log('listening on *:80');
+//process.env.PORT || 
+http.listen(8080, function(){
+    console.log('listening on *:8080');
 });

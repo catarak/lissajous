@@ -10,6 +10,6 @@ With node.js installed, navigate to the root directory of this project and execu
 
 `npm install`
 
-`node liss_server.js`
+`node server.js`
 
 Site will now be running at localhost:8080
